@@ -22,6 +22,7 @@ function Invoke-MgGraphRequestAll {
 }
 
 $filters = Invoke-MgGraphRequestAll -Uri 'https://graph.microsoft.com/beta/deviceManagement/assignmentFilters' 
+# If you use Microsoft.Graph.Beta.DeviceManagement: Get-MgBetaDeviceManagementAssignmentFilter
 
 # Export to a CSV file. Use Select-Object to choose and sort the properties
 $filters | select-object -Property id, displayName, platform, rule | Export-Csv -Path "filters.csv" -NoTypeInformation 
@@ -51,3 +52,5 @@ $devices = Invoke-MgGraphRequestAll -Uri 'https://graph.microsoft.com/beta/devic
 foreach ($device in $devices) {
     Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/beta/deviceManagement/managedDevices/$($device.id)/syncDevice" -Method Post
 }
+
+Disconnect-MgGraph
